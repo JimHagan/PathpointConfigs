@@ -71,7 +71,7 @@
                             "id": "ST1-LINE2-SS2"
                         },
                         {
-                            "title": "Guest",
+                            "title": "Billing",
                             "id": "ST1-LINE2-SS3"
                         }
                     ]
@@ -80,45 +80,7 @@
                     "line": 3,
                     "values": [
                         {
-                            "title": "Search",
-                            "id": "ST1-LINE3-SS1"
-                        },
-                        {
-                            "title": "Menu",
-                            "id": "ST1-LINE3-SS2"
-                        },
-                        {
-                            "title": "Gift Card",
-                            "id": "ST1-LINE3-SS3"
-                        },
-                        {
-                            "title": "Rewards",
-                            "id": "ST1-LINE3-SS4"
-                        }
-                    ]
-                },
-                {
-                    "line": 4,
-                    "values": [
-                        {
-                            "title": "Rewards",
-                            "id": "ST1-LINE4-SS1"
-                        },
-                        {
-                            "title": "Pick-Up Item",
-                            "id": "ST1-LINE4-SS2"
-                        },
-                        {
-                            "title": "Reward Item",
-                            "id": "ST1-LINE4-SS3"
-                        }
-                    ]
-                },
-                {
-                    "line": 5,
-                    "values": [
-                        {
-                            "title": "Add to Bag",
+                            "title": "Add to Cart",
                             "id": "ST1-LINE5-SS1"
                         }
                     ]
@@ -223,15 +185,15 @@
                     "line": 1,
                     "values": [
                         {
-                            "title": "Pay Items",
+                            "title": "Packing & Assembly",
                             "id": "ST2-LINE1-SS1"
                         },
                         {
-                            "title": "Reward Items",
+                            "title": "Boxing",
                             "id": "ST2-LINE1-SS2"
                         },
                         {
-                            "title": "Saved items",
+                            "title": "Wrapping",
                             "id": "ST2-LINE1-SS3"
                         }
                     ]
@@ -240,42 +202,8 @@
                     "line": 2,
                     "values": [
                         {
-                            "title": "Add/Remove Item",
+                            "title": "Inventory Service",
                             "id": "ST2-LINE2-SS1"
-                        },
-                        {
-                            "title": "Promo Code",
-                            "id": "ST2-LINE2-SS2"
-                        }
-                    ]
-                },
-                {
-                    "line": 3,
-                    "values": [
-                        {
-                            "title": "PAY Calculation",
-                            "id": "ST2-LINE3-SS1"
-                        },
-                        {
-                            "title": "POINTS Calculation",
-                            "id": "ST2-LINE3-SS2"
-                        }
-                    ]
-                },
-                {
-                    "line": 4,
-                    "values": [
-                        {
-                            "title": "Checkout",
-                            "id": "ST2-LINE4-SS1"
-                        },
-                        {
-                            "title": "Continue Shopping",
-                            "id": "ST2-LINE4-SS2"
-                        },
-                        {
-                            "title": "Save For Later",
-                            "id": "ST2-LINE4-SS3"
                         }
                     ]
                 }
@@ -312,40 +240,6 @@
                             "min_apdex": 0.4,
                             "max_response_time": 0.5,
                             "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "Master Data API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST2-LINE3-SS1",
-                    "queries": [
-                        {
-                            "type": "FRT-HEALTH-QUERY",
-                            "accountID": 3317497,
-                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
-                            "min_apdex": 0.6,
-                            "max_response_time": 1.2,
-                            "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "Subscriptions API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST2-LINE4-SS1",
-                    "queries": [
-                        {
-                            "type": "PCC-COUNT-QUERY",
-                            "accountID": 3317497,
-                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name='WebTransaction/Action/login'",
-                            "min_count": 36
                         }
                     ]
                 }

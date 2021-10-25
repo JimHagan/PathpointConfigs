@@ -65,7 +65,7 @@ The Demotron V2 account contains a fairly detailed microservice tier dedicated t
 - `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'shipment-label%'`
 - `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'delivery%'`
 
-### Order Notification
+###  Notification
 
 #### APM Sources
 
