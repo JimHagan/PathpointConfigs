@@ -13,13 +13,13 @@ The Demotron V2 account contains a fairly detailed microservice tier dedicated t
  - [Billing-Service](https://onenr.io/0GbRmlyMVwy)
  - [Inventory](https://onenr.io/0kERzGmrAjr)
 
-#### Log Sources
-
-[TBD]
-
 #### Infra Sources
 
-[TBD]
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'order-processing%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'order-composer%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'billing-service%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'billing-service%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'inventory-%'`
 
 #### Packaging
 
@@ -32,15 +32,16 @@ The Demotron V2 account contains a fairly detailed microservice tier dedicated t
 - [Packing-Room](https://onenr.io/0a2wdPBlMwE)
 - [Inventory](https://onenr.io/0Zyw4z74Mj3)
 - [Inventory-Service](https://onenr.io/0GbRmlyaWwy)
-- [Order-Status](https://onenr.io/0WBQ1JxE9wx)
-
-#### Log Sources
-
-[TBD]
 
 #### Infra Sources
 
-[TBD]
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'order-packaging%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'order-assembly%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'order-packaging%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'box%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'bubble-wrap%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'packing-room%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'inventory-service%'`
 
 ### Shipping
 
@@ -49,16 +50,12 @@ The Demotron V2 account contains a fairly detailed microservice tier dedicated t
 - [Shipping-Service](https://onenr.io/0kLwG085KR6)
 - [Shipment-Label](https://onenr.io/0xVwgm8mBjJ)
 - [Delivery](https://onenr.io/0gbRK0Ge9jE)
-- [Order-Status]
-- [Order-Status](https://onenr.io/0WBQ1JxE9wx)
-
-#### Log Sources
-
-[TBD]
 
 #### Infra Sources
 
-[TBD]
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'shipping-service%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'shipment-label%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'delivery%'`
 
 ### Order Notification
 
@@ -67,13 +64,10 @@ The Demotron V2 account contains a fairly detailed microservice tier dedicated t
 - [Email-Notification](https://onenr.io/0Zyw4z7zVj3)
 - [SMS-Notification](https://onenr.io/0X8wo4YDYRx)
 
-#### Log Sources
-
-[TBD]
-
 #### Infra Sources
 
-[TBD]
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'email-notification%'`
+- `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'sms-notification%'`
 
 
 
