@@ -255,7 +255,7 @@
                     "line": 1,
                     "values": [
                         {
-                            "title": "Customer info.",
+                            "title": "Labeling",
                             "id": "ST3-LINE1-SS1"
                         }
                     ]
@@ -264,53 +264,19 @@
                     "line": 2,
                     "values": [
                         {
-                            "title": "Delivery Options",
+                            "title": "Shipping",
                             "id": "ST3-LINE2-SS1"
                         },
                         {
-                            "title": "Pick-Up Options",
+                            "title": "Delivery",
                             "id": "ST3-LINE2-SS2"
-                        },
-                        {
-                            "title": "Gift Option",
-                            "id": "ST3-LINE2-SS3"
-                        }
-                    ]
-                },
-                {
-                    "line": 3,
-                    "values": [
-                        {
-                            "title": "Credit Card",
-                            "id": "ST3-LINE3-SS1"
-                        },
-                        {
-                            "title": "Paypal",
-                            "id": "ST3-LINE3-SS2"
-                        },
-                        {
-                            "title": "Afterpay",
-                            "id": "ST3-LINE3-SS3"
-                        },
-                        {
-                            "title": "Gift Card ",
-                            "id": "ST3-LINE3-SS4"
-                        }
-                    ]
-                },
-                {
-                    "line": 4,
-                    "values": [
-                        {
-                            "title": "Submit Order",
-                            "id": "ST3-LINE4-SS1"
                         }
                     ]
                 }
             ],
             "touchpoints": [
                 {
-                    "title": "Session Manager API",
+                    "title": "Shipping Service Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
@@ -326,7 +292,7 @@
                     ]
                 },
                 {
-                    "title": "Checkout Check",
+                    "title": "Shipping Service Health",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
@@ -342,74 +308,6 @@
                             "min_success_percentage": 98
                         }
                     ]
-                },
-                {
-                    "title": "Customer Credit API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST3-LINE3-SS1",
-                    "queries": [
-                        {
-                            "type": "PCC-COUNT-QUERY",
-                            "accountID": 3317497,
-                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name LIKE 'WebTransaction/Action/App%'",
-                            "min_count": 20
-                        }
-                    ]
-                },
-                {
-                    "title": "Gift Card API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST3-LINE4-SS1",
-                    "queries": [
-                        {
-                            "type": "APP-HEALTH-QUERY",
-                            "accountID": 3317497,
-                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
-                            "min_apdex": 0.4,
-                            "max_response_time": 0.5,
-                            "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "Gift Card Hub API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST3-LINE2-SS1",
-                    "queries": [
-                        {
-                            "type": "FRT-HEALTH-QUERY",
-                            "accountID": 3317497,
-                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
-                            "min_apdex": 0.6,
-                            "max_response_time": 1.2,
-                            "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "Catalog API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST3-LINE2-SS3",
-                    "queries": [
-                        {
-                            "type": "PCC-COUNT-QUERY",
-                            "accountID": 3317497,
-                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name='WebTransaction/Action/login'",
-                            "min_count": 36
-                        }
-                    ]
                 }
             ]
         },
@@ -423,66 +321,23 @@
                     "line": 1,
                     "values": [
                         {
-                            "title": "Delivery Items",
+                            "title": "Email",
                             "id": "ST4-LINE1-SS1"
                         },
                         {
-                            "title": "Pick-Up Items",
+                            "title": "SMS",
                             "id": "ST4-LINE1-SS2"
                         },
                         {
-                            "title": "Item Not Available",
+                            "title": "In App",
                             "id": "ST4-LINE1-SS3"
-                        }
-                    ]
-                },
-                {
-                    "line": 2,
-                    "values": [
-                        {
-                            "title": "Order Processing",
-                            "id": "ST4-LINE2-SS1"
-                        },
-                        {
-                            "title": "Order Canceled",
-                            "id": "ST4-LINE2-SS2"
-                        },
-                        {
-                            "title": "Order Delayed",
-                            "id": "ST4-LINE2-SS3"
-                        }
-                    ]
-                },
-                {
-                    "line": 3,
-                    "values": [
-                        {
-                            "title": "Delivery Label Generated",
-                            "id": "ST4-LINE3-SS1"
-                        },
-                        {
-                            "title": "Pick-up Prep",
-                            "id": "ST4-LINE3-SS2"
-                        }
-                    ]
-                },
-                {
-                    "line": 4,
-                    "values": [
-                        {
-                            "title": "Order Tracking #",
-                            "id": "ST4-LINE4-SS1"
-                        },
-                        {
-                            "title": "Pick-up Date and Locatioon",
-                            "id": "ST4-LINE4-SS2"
                         }
                     ]
                 }
             ],
             "touchpoints": [
                 {
-                    "title": "Orders API",
+                    "title": "Email Service Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
@@ -498,12 +353,12 @@
                     ]
                 },
                 {
-                    "title": "Customer Credit API",
+                    "title": "Notification Service Health",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
                     ],
-                    "related_steps": "ST4-LINE2-SS1",
+                    "related_steps": "ST4-LINE1-SS2",
                     "queries": [
                         {
                             "type": "APP-HEALTH-QUERY",
@@ -516,12 +371,12 @@
                     ]
                 },
                 {
-                    "title": "Gift Card API",
+                    "title": "In App Notification Health",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
                     ],
-                    "related_steps": "ST4-LINE3-SS1",
+                    "related_steps": "ST4-LINE1-SS3",
                     "queries": [
                         {
                             "type": "FRT-HEALTH-QUERY",
@@ -530,40 +385,6 @@
                             "min_apdex": 0.6,
                             "max_response_time": 1.2,
                             "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "Gift Card Hub API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST4-LINE4-SS1",
-                    "queries": [
-                        {
-                            "type": "SYN-CHECK-QUERY",
-                            "accountID": 3317497,
-                            "query": "SELECT filter(percentage(count(result),WHERE result='SUCCESS'),WHERE 1=1) as success, max(duration) as duration, max(longRunningTasksAvgTime) as request from SyntheticCheck,SyntheticRequest WHERE monitorName='BDB Live person'",
-                            "max_avg_response_time": 0.7,
-                            "max_total_check_time": 1.25,
-                            "min_success_percentage": 98
-                        }
-                    ]
-                },
-                {
-                    "title": "Logistics API",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
-                    ],
-                    "related_steps": "ST4-LINE4-SS2",
-                    "queries": [
-                        {
-                            "type": "PRC-COUNT-QUERY",
-                            "accountID": 2904070,
-                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='us-west-1'",
-                            "min_count": 36
                         }
                     ]
                 }
