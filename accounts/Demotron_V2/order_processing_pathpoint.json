@@ -1,1 +1,679 @@
-{}
+{
+    "pathpointVersion": "1.5.9",
+    "kpis": [
+        {
+            "type": 100,
+            "name": "Orders Processed",
+            "shortName": "Processed",
+            "link": "https://onenr.io/0kERzGBdEjr",
+            "query": "FROM Transaction select count(*) where appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST'",
+            "value_type": "INT",
+            "prefix": "",
+            "suffix": "",
+            "check": true
+        },
+        {
+            "type": 100,
+            "name": "Order Process Errors",
+            "shortName": "Errors",
+            "link": "https://onenr.io/0GbRmlPBzwy",
+            "query": "FROM Transaction select count(*) where appName = 'Order-Processing' and httpResponseCode != '200' and request.method = 'POST'",
+            "value_type": "INT",
+            "prefix": "",
+            "suffix": "",
+            "check": true
+        },
+        {
+            "type": 100,
+            "name": "Orders Shipped",
+            "shortName": "Shipped",
+            "link": "https://onenr.io/01qwL8KPxw5",
+            "query": "FROM Transaction select count(*) where appName = 'Shipping Service' AND errorMessage is NULL",
+            "value_type": "INT",
+            "prefix": "",
+            "suffix": "",
+            "check": false
+        }
+    ],
+    "stages": [
+        {
+            "title": "ORDER MGMT.",
+            "active_dotted": "none",
+            "arrowMode": "FLOW",
+            "percentage_above_avg": 20,
+            "steps": [
+                {
+                    "line": 1,
+                    "values": [
+                        {
+                            "title": "Web",
+                            "id": "ST1-LINE1-SS1"
+                        },
+                        {
+                            "title": "Mobile Web",
+                            "id": "ST1-LINE1-SS2"
+                        },
+                        {
+                            "title": "App",
+                            "id": "ST1-LINE1-SS3"
+                        }
+                    ]
+                },
+                {
+                    "line": 2,
+                    "values": [
+                        {
+                            "title": "Login",
+                            "id": "ST1-LINE2-SS1"
+                        },
+                        {
+                            "title": "Signup",
+                            "id": "ST1-LINE2-SS2"
+                        },
+                        {
+                            "title": "Guest",
+                            "id": "ST1-LINE2-SS3"
+                        }
+                    ]
+                },
+                {
+                    "line": 3,
+                    "values": [
+                        {
+                            "title": "Search",
+                            "id": "ST1-LINE3-SS1"
+                        },
+                        {
+                            "title": "Menu",
+                            "id": "ST1-LINE3-SS2"
+                        },
+                        {
+                            "title": "Gift Card",
+                            "id": "ST1-LINE3-SS3"
+                        },
+                        {
+                            "title": "Rewards",
+                            "id": "ST1-LINE3-SS4"
+                        }
+                    ]
+                },
+                {
+                    "line": 4,
+                    "values": [
+                        {
+                            "title": "Rewards",
+                            "id": "ST1-LINE4-SS1"
+                        },
+                        {
+                            "title": "Pick-Up Item",
+                            "id": "ST1-LINE4-SS2"
+                        },
+                        {
+                            "title": "Reward Item",
+                            "id": "ST1-LINE4-SS3"
+                        }
+                    ]
+                },
+                {
+                    "line": 5,
+                    "values": [
+                        {
+                            "title": "Add to Bag",
+                            "id": "ST1-LINE5-SS1"
+                        }
+                    ]
+                }
+            ],
+            "touchpoints": [
+                {
+                    "title": "Login People",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST1-LINE2-SS1",
+                    "queries": [
+                        {
+                            "type": "PRC-COUNT-QUERY",
+                            "accountID": 2904070,
+                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='queue'",
+                            "min_count": 10
+                        }
+                    ]
+                },
+                {
+                    "title": "App Backend Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST1-LINE1-SS3",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
+                            "min_apdex": 0.4,
+                            "max_response_time": 0.5,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "App Frontend Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST1-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "FRT-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
+                            "min_apdex": 0.6,
+                            "max_response_time": 1.2,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "Login Check",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST1-LINE2-SS1",
+                    "queries": [
+                        {
+                            "type": "SYN-CHECK-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(percentage(count(result),WHERE result='SUCCESS'),WHERE 1=1) as success, max(duration) as duration, max(longRunningTasksAvgTime) as request from SyntheticCheck,SyntheticRequest WHERE monitorName='BDB Live person'",
+                            "max_avg_response_time": 0.7,
+                            "max_total_check_time": 1.25,
+                            "min_success_percentage": 98
+                        }
+                    ]
+                },
+                {
+                    "title": "Signup People",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST1-LINE2-SS2",
+                    "queries": [
+                        {
+                            "type": "PRC-COUNT-QUERY",
+                            "accountID": 2904070,
+                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='us-east-1'",
+                            "min_count": 36
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PACKAGING",
+            "active_dotted": "none",
+            "arrowMode": "STATIC",
+            "percentage_above_avg": 20,
+            "steps": [
+                {
+                    "line": 1,
+                    "values": [
+                        {
+                            "title": "Pay Items",
+                            "id": "ST2-LINE1-SS1"
+                        },
+                        {
+                            "title": "Reward Items",
+                            "id": "ST2-LINE1-SS2"
+                        },
+                        {
+                            "title": "Saved items",
+                            "id": "ST2-LINE1-SS3"
+                        }
+                    ]
+                },
+                {
+                    "line": 2,
+                    "values": [
+                        {
+                            "title": "Add/Remove Item",
+                            "id": "ST2-LINE2-SS1"
+                        },
+                        {
+                            "title": "Promo Code",
+                            "id": "ST2-LINE2-SS2"
+                        }
+                    ]
+                },
+                {
+                    "line": 3,
+                    "values": [
+                        {
+                            "title": "PAY Calculation",
+                            "id": "ST2-LINE3-SS1"
+                        },
+                        {
+                            "title": "POINTS Calculation",
+                            "id": "ST2-LINE3-SS2"
+                        }
+                    ]
+                },
+                {
+                    "line": 4,
+                    "values": [
+                        {
+                            "title": "Checkout",
+                            "id": "ST2-LINE4-SS1"
+                        },
+                        {
+                            "title": "Continue Shopping",
+                            "id": "ST2-LINE4-SS2"
+                        },
+                        {
+                            "title": "Save For Later",
+                            "id": "ST2-LINE4-SS3"
+                        }
+                    ]
+                }
+            ],
+            "touchpoints": [
+                {
+                    "title": "Catalog API USE",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST2-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "PCC-COUNT-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT count(*) FROM Public_APICall WHERE awsRegion='us-east-1'",
+                            "min_count": 20
+                        }
+                    ]
+                },
+                {
+                    "title": "Pricing API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST2-LINE2-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
+                            "min_apdex": 0.4,
+                            "max_response_time": 0.5,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "Master Data API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST2-LINE3-SS1",
+                    "queries": [
+                        {
+                            "type": "FRT-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
+                            "min_apdex": 0.6,
+                            "max_response_time": 1.2,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "Subscriptions API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST2-LINE4-SS1",
+                    "queries": [
+                        {
+                            "type": "PCC-COUNT-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name='WebTransaction/Action/login'",
+                            "min_count": 36
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "SHIPPING",
+            "active_dotted": "none",
+            "arrowMode": "STATIC",
+            "percentage_above_avg": 20,
+            "steps": [
+                {
+                    "line": 1,
+                    "values": [
+                        {
+                            "title": "Customer info.",
+                            "id": "ST3-LINE1-SS1"
+                        }
+                    ]
+                },
+                {
+                    "line": 2,
+                    "values": [
+                        {
+                            "title": "Delivery Options",
+                            "id": "ST3-LINE2-SS1"
+                        },
+                        {
+                            "title": "Pick-Up Options",
+                            "id": "ST3-LINE2-SS2"
+                        },
+                        {
+                            "title": "Gift Option",
+                            "id": "ST3-LINE2-SS3"
+                        }
+                    ]
+                },
+                {
+                    "line": 3,
+                    "values": [
+                        {
+                            "title": "Credit Card",
+                            "id": "ST3-LINE3-SS1"
+                        },
+                        {
+                            "title": "Paypal",
+                            "id": "ST3-LINE3-SS2"
+                        },
+                        {
+                            "title": "Afterpay",
+                            "id": "ST3-LINE3-SS3"
+                        },
+                        {
+                            "title": "Gift Card ",
+                            "id": "ST3-LINE3-SS4"
+                        }
+                    ]
+                },
+                {
+                    "line": 4,
+                    "values": [
+                        {
+                            "title": "Submit Order",
+                            "id": "ST3-LINE4-SS1"
+                        }
+                    ]
+                }
+            ],
+            "touchpoints": [
+                {
+                    "title": "Session Manager API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST3-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "PCC-COUNT-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name='WebTransaction/Action/login'",
+                            "min_count": 36
+                        }
+                    ]
+                },
+                {
+                    "title": "Checkout Check",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST3-LINE2-SS2",
+                    "queries": [
+                        {
+                            "type": "SYN-CHECK-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(percentage(count(result),WHERE result='SUCCESS'),WHERE 1=1) as success, max(duration) as duration, max(longRunningTasksAvgTime) as request from SyntheticCheck,SyntheticRequest WHERE monitorName='BDB Live person'",
+                            "max_avg_response_time": 0.7,
+                            "max_total_check_time": 1.25,
+                            "min_success_percentage": 98
+                        }
+                    ]
+                },
+                {
+                    "title": "Customer Credit API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST3-LINE3-SS1",
+                    "queries": [
+                        {
+                            "type": "PCC-COUNT-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name LIKE 'WebTransaction/Action/App%'",
+                            "min_count": 20
+                        }
+                    ]
+                },
+                {
+                    "title": "Gift Card API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST3-LINE4-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
+                            "min_apdex": 0.4,
+                            "max_response_time": 0.5,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "Gift Card Hub API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST3-LINE2-SS1",
+                    "queries": [
+                        {
+                            "type": "FRT-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
+                            "min_apdex": 0.6,
+                            "max_response_time": 1.2,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "Catalog API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST3-LINE2-SS3",
+                    "queries": [
+                        {
+                            "type": "PCC-COUNT-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name='WebTransaction/Action/login'",
+                            "min_count": 36
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "NOTIFICATION",
+            "active_dotted": "none",
+            "arrowMode": "FLOW",
+            "percentage_above_avg": 20,
+            "steps": [
+                {
+                    "line": 1,
+                    "values": [
+                        {
+                            "title": "Delivery Items",
+                            "id": "ST4-LINE1-SS1"
+                        },
+                        {
+                            "title": "Pick-Up Items",
+                            "id": "ST4-LINE1-SS2"
+                        },
+                        {
+                            "title": "Item Not Available",
+                            "id": "ST4-LINE1-SS3"
+                        }
+                    ]
+                },
+                {
+                    "line": 2,
+                    "values": [
+                        {
+                            "title": "Order Processing",
+                            "id": "ST4-LINE2-SS1"
+                        },
+                        {
+                            "title": "Order Canceled",
+                            "id": "ST4-LINE2-SS2"
+                        },
+                        {
+                            "title": "Order Delayed",
+                            "id": "ST4-LINE2-SS3"
+                        }
+                    ]
+                },
+                {
+                    "line": 3,
+                    "values": [
+                        {
+                            "title": "Delivery Label Generated",
+                            "id": "ST4-LINE3-SS1"
+                        },
+                        {
+                            "title": "Pick-up Prep",
+                            "id": "ST4-LINE3-SS2"
+                        }
+                    ]
+                },
+                {
+                    "line": 4,
+                    "values": [
+                        {
+                            "title": "Order Tracking #",
+                            "id": "ST4-LINE4-SS1"
+                        },
+                        {
+                            "title": "Pick-up Date and Locatioon",
+                            "id": "ST4-LINE4-SS2"
+                        }
+                    ]
+                }
+            ],
+            "touchpoints": [
+                {
+                    "title": "Orders API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST4-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "PRC-COUNT-QUERY",
+                            "accountID": 2904070,
+                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='ap-southeast-2'",
+                            "min_count": 10
+                        }
+                    ]
+                },
+                {
+                    "title": "Customer Credit API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST4-LINE2-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
+                            "min_apdex": 0.4,
+                            "max_response_time": 0.5,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "Gift Card API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST4-LINE3-SS1",
+                    "queries": [
+                        {
+                            "type": "FRT-HEALTH-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
+                            "min_apdex": 0.6,
+                            "max_response_time": 1.2,
+                            "max_error_percentage": 5
+                        }
+                    ]
+                },
+                {
+                    "title": "Gift Card Hub API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST4-LINE4-SS1",
+                    "queries": [
+                        {
+                            "type": "SYN-CHECK-QUERY",
+                            "accountID": 3317497,
+                            "query": "SELECT filter(percentage(count(result),WHERE result='SUCCESS'),WHERE 1=1) as success, max(duration) as duration, max(longRunningTasksAvgTime) as request from SyntheticCheck,SyntheticRequest WHERE monitorName='BDB Live person'",
+                            "max_avg_response_time": 0.7,
+                            "max_total_check_time": 1.25,
+                            "min_success_percentage": 98
+                        }
+                    ]
+                },
+                {
+                    "title": "Logistics API",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/01qwL8KPxw5"
+                    ],
+                    "related_steps": "ST4-LINE4-SS2",
+                    "queries": [
+                        {
+                            "type": "PRC-COUNT-QUERY",
+                            "accountID": 2904070,
+                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='us-west-1'",
+                            "min_count": 36
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
