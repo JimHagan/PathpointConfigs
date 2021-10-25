@@ -33,6 +33,14 @@ The Demotron V2 account contains a fairly detailed microservice tier dedicated t
 - [Inventory](https://onenr.io/0Zyw4z74Mj3)
 - [Inventory-Service](https://onenr.io/0GbRmlyaWwy)
 
+#### Browser Sources
+- Home Page: `FROM BrowserInteraction select percentile(duration, 95) where appName = 'WebPortal' where browserInteractionName = 'webportal.telco.nrdemo.com:80/index.html'`
+- Browse Product: `FROM BrowserInteraction select percentile(duration, 95) where appName = 'WebPortal' where browserInteractionName = 'webportal.telco.nrdemo.com:80/browse/phones/*'`
+- Cart Activity: `FROM BrowserInteraction select percentile(duration, 95) where appName = 'WebPortal' where browserInteractionName = 'webportal.telco.nrdemo.com:80/shoppingcart'`
+
+#### Database Sources
+- `SELECT average(provider.readLatency.Average) from DatastoreSample where displayName = 'planservicedbtelcoprod'`
+
 #### Infra Sources
 
 - `FROM K8sContainerSample select average(cpuCoresUtilization) where podName like 'order-packaging%'`
