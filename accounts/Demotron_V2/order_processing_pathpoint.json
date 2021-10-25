@@ -210,12 +210,12 @@
             ],
             "touchpoints": [
                 {
-                    "title": "Catalog API USE",
+                    "title": "Inventory Service Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
                     ],
-                    "related_steps": "ST2-LINE1-SS1",
+                    "related_steps": "ST2-LINE2-SS1",
                     "queries": [
                         {
                             "type": "PCC-COUNT-QUERY",
@@ -226,7 +226,7 @@
                     ]
                 },
                 {
-                    "title": "Pricing API",
+                    "title": "Inventory Service Health",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
