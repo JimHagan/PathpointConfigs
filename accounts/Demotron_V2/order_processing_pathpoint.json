@@ -3,10 +3,10 @@
     "kpis": [
         {
             "type": 101,
-            "name": "Orders Processed",
+            "name": "ORDER_PROC",
             "shortName": "Processed",
             "link": "https://onenr.io/0kERzGBdEjr",
-            "query": "SELECT count(*) as  value  FROM Transaction where appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as  value  FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -14,10 +14,10 @@
         },
         {
             "type": 101,
-            "name": "Order Process Errors",
+            "name": "ORDER_PROC_ERR",
             "shortName": "Errors",
             "link": "https://onenr.io/0GbRmlPBzwy",
-            "query": "SELECT count(*) as value  FROM  Transaction where appName = 'Order-Processing' and httpResponseCode != '200' and request.method = 'POST' COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' and request.method = 'POST' COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -25,10 +25,10 @@
         },
         {
             "type": 101,
-            "name": "Orders Shipped",
+            "name": "ORDER_SHIP",
             "shortName": "Shipped",
             "link": "https://onenr.io/01qwL8KPxw5",
-            "query": "SELECT count(*) as value  FROM  Transaction where appName = 'Shipping Service' AND errorMessage is NULL COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Shipping Service' AND errorMessage is NULL COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
