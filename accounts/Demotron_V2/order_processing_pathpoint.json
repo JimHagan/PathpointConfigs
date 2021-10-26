@@ -289,7 +289,7 @@
                         {
                             "type": "PRC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  'inventory%' ",
+                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  'inventory%'",
                             "max_count": 5
                         }
                     ]
@@ -380,7 +380,7 @@
                         {
                             "type": "PRC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  'shipping%' ",
+                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  'shipping%'",
                             "max_count": 5
                         }
                     ]
@@ -484,7 +484,7 @@
                         {
                             "type": "PRC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  ''%-notification-%'' ",
+                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  '%-notification-%'",
                             "max_count": 5
                         }
                     ]
