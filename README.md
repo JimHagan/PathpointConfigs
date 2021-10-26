@@ -5,10 +5,4 @@ A repository for various configs that will work on Demotron V2 New Relic Account
 Use the accounts folder to organize one or more configs under the correct account name.
 
 
-```
-└── accounts
-    └── Demotron_V2
-        ├── OrderComposerServiceMap.png
-        ├── order_processing_pathpoint.json
-        └── order_processing_pathpoint.md
-```
+[configs...]('./accounts/')
