@@ -3,10 +3,10 @@
     "kpis": [
         {
             "type": 101,
-            "name": "Orders Processed",
+            "name": "Processed",
             "shortName": "ORDER_PROC",
-            "link": "https://onenr.io/0kERzGBdEjr",
-            "query": "SELECT count(*) as value  FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
+            "link": "https://onenr.io/0dOQM2ZPNwG",
+            "query": "https://onenr.io/0NgR7JL3Zwo",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -14,10 +14,10 @@
         },
         {
             "type": 101,
-            "name": "Orders Proessed",
+            "name": "Process Errors",
             "shortName": "ORDER_PROC_ERR",
-            "link": "https://onenr.io/0GbRmlPBzwy",
-            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
+            "link": "https://onenr.io/08dQeeBrVQe",
+            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -25,9 +25,9 @@
         },
         {
             "type": 101,
-            "name": "Orders Shipped",
+            "name": "Shipped",
             "shortName": "ORDER_SHIP",
-            "link": "https://onenr.io/01qwL8KPxw5",
+            "link": "https://onenr.io/0x0jlgGN7RW",
             "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Shipping Service' AND errorMessage is NULL COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
             "prefix": "",
@@ -100,7 +100,7 @@
                     "title": "Login People",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST1-LINE2-SS1",
                     "queries": [
@@ -116,7 +116,7 @@
                     "title": "App Backend Health",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST1-LINE1-SS3",
                     "queries": [
@@ -134,7 +134,7 @@
                     "title": "App Frontend Health",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST1-LINE1-SS1",
                     "queries": [
@@ -152,7 +152,7 @@
                     "title": "Login Check",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST1-LINE2-SS1",
                     "queries": [
@@ -170,7 +170,7 @@
                     "title": "Signup People",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST1-LINE2-SS2",
                     "queries": [
@@ -186,7 +186,7 @@
                     "title": "Order Composer Pod Wait",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST1-LINE4-SS1",
                     "queries": [
@@ -248,7 +248,7 @@
                     "title": "Inventory Service Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST2-LINE2-SS1",
                     "queries": [
@@ -264,7 +264,7 @@
                     "title": "Inventory Service Health",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST2-LINE2-SS1",
                     "queries": [
@@ -282,7 +282,7 @@
                     "title": "Inventory Pod Wait",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST2-LINE3-SS1",
                     "queries": [
@@ -339,7 +339,7 @@
                     "title": "Shipping Service Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST3-LINE1-SS1",
                     "queries": [
@@ -355,7 +355,7 @@
                     "title": "Shipping Service Health",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST3-LINE2-SS2",
                     "queries": [
@@ -373,7 +373,7 @@
                     "title": "Shipping Pod Wait",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST3-LINE3-SS1",
                     "queries": [
@@ -425,7 +425,7 @@
                     "title": "Notification Services Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST4-LINE1-SS1",
                     "queries": [
@@ -441,7 +441,7 @@
                     "title": "Notification Service Health",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST4-LINE1-SS2",
                     "queries": [
@@ -459,7 +459,7 @@
                     "title": "In App Notification Health",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST4-LINE1-SS3",
                     "queries": [
@@ -477,7 +477,7 @@
                     "title": "Notification Pod Wait",
                     "status_on_off": true,
                     "dashboard_url": [
-                        "https://onenr.io/01qwL8KPxw5"
+                        "https://onenr.io/0EPwJb28Bw7"
                     ],
                     "related_steps": "ST4-LINE2-SS1",
                     "queries": [
