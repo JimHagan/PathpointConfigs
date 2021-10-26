@@ -346,7 +346,7 @@
                         {
                             "type": "PCC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT count(*) from Transaction WHERE appName='QS' AND name='WebTransaction/Action/login'",
+                            "query": "SELECT count(*) from Transaction WHERE appName = 'Inventory Service' and transactionType = 'Web'",
                             "min_count": 36
                         }
                     ]
@@ -422,7 +422,7 @@
             ],
             "touchpoints": [
                 {
-                    "title": "Email Service Throughput",
+                    "title": "Notification Services Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/01qwL8KPxw5"
@@ -432,7 +432,7 @@
                         {
                             "type": "PRC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='ap-southeast-2'",
+                            "query": "SELECT count(*) from Transaction WHERE appName like '%-Notification' and transactionType = 'Web'",
                             "min_count": 10
                         }
                     ]
