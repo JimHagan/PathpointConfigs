@@ -6,7 +6,7 @@
             "name": "Orders Processed",
             "shortName": "ORDER_PROC",
             "link": "https://onenr.io/0kERzGBdEjr",
-            "query": "SELECT count(*) as  value  FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as value  FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
