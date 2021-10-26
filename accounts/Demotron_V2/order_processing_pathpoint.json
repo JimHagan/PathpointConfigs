@@ -3,8 +3,8 @@
     "kpis": [
         {
             "type": 101,
-            "name": "ORDER_PROC",
-            "shortName": "Processed",
+            "name": "Orders Processed",
+            "shortName": "ORDER_PROC",
             "link": "https://onenr.io/0kERzGBdEjr",
             "query": "SELECT count(*) as  value  FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
@@ -14,10 +14,10 @@
         },
         {
             "type": 101,
-            "name": "ORDER_PROC_ERR",
-            "shortName": "Errors",
+            "name": "Orders Proessed",
+            "shortName": "ORDER_PROC_ERR",
             "link": "https://onenr.io/0GbRmlPBzwy",
-            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' and request.method = 'POST' COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Order-Processing' and httpResponseCode = '200' and request.method = 'POST' COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -25,8 +25,8 @@
         },
         {
             "type": 101,
-            "name": "ORDER_SHIP",
-            "shortName": "Shipped",
+            "name": "Orders Shipped",
+            "shortName": "ORDER_SHIP",
             "link": "https://onenr.io/01qwL8KPxw5",
             "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Shipping Service' AND errorMessage is NULL COMPARE WITH 2 day ago",
             "value_type": "FLOAT",
