@@ -174,7 +174,7 @@
         {
             "title": "PACKAGE",
             "active_dotted": "none",
-            "arrowMode": "STATIC",
+            "arrowMode": "FLOW",
             "percentage_above_avg": 20,
             "steps": [
                 {
@@ -244,7 +244,7 @@
         {
             "title": "SHIP",
             "active_dotted": "none",
-            "arrowMode": "STATIC",
+            "arrowMode": "FLOW",
             "percentage_above_avg": 20,
             "steps": [
                 {
