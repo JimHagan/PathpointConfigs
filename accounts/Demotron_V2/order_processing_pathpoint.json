@@ -3,8 +3,8 @@
     "kpis": [
         {
             "type": 101,
-            "name": "ORDERS",
-            "shortName": "ORD.",
+            "name": "Total Purchases",
+            "shortName": "PURCH",
             "link": "https://onenr.io/01OwvK9y1Rv",
             "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
             "value_type": "FLOAT",
@@ -14,19 +14,8 @@
         },
         {
             "type": 101,
-            "name": "ORDER ERRORS",
-            "shortName": "ORD. ERR.",
-            "link": "https://onenr.io/0PoR8l7XXRG",
-            "query": "SELECT count(*) as value FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' COMPARE WITH 1 week ago",
-            "value_type": "FLOAT",
-            "prefix": "",
-            "suffix": "",
-            "check": true
-        },
-        {
-            "type": 101,
-            "name": "DELIVERED",
-            "shortName": "DELIVERED",
+            "name": "Total Delivered",
+            "shortName": "DEL",
             "link": "https://onenr.io/0bEjOMoZpw6",
             "query": "SELECT count(*) as value FROM Transaction where appName = 'Delivery' where name = 'Controller/Sinatra//deliver' and http.statusCode = 200 COMPARE WITH 1 week ago",
             "value_type": "FLOAT",
@@ -36,10 +25,32 @@
         },
         {
             "type": 101,
-            "name": "RETURNED",
-            "shortName": "RETURNS",
+            "name": "Total Returns",
+            "shortName": "RET",
             "link": "https://onenr.io/0xVwg3P6ZwJ",
             "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
+            "value_type": "FLOAT",
+            "prefix": "",
+            "suffix": "",
+            "check": true
+        },        
+        {
+            "type": 101,
+            "name": "Total Slow Orders",
+            "shortName": "SLOW",
+            "link": "https://onenr.io/0JBQrBb0rQZ",
+            "query": "select count(*) as value from Transaction where duration > 2 and appName in ('Order-Processing') and name = 'Controller/Sinatra//purchase' COMPARE WITH 1 week ago",
+            "value_type": "FLOAT",
+            "prefix": "",
+            "suffix": "",
+            "check": true
+        },
+        {
+            "type": 101,
+            "name": "Total Errors During Order",
+            "shortName": "ERR",
+            "link": "https://onenr.io/0PoR8l7XXRG",
+            "query": "SELECT count(*) as value FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' COMPARE WITH 1 week ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -128,7 +139,7 @@
                     "line": 3,
                     "values": [
                         {
-                            "title": "Add to Cart",
+                            "title": "Inventory",
                             "id": "ST1-LINE3-SS1"
                         }
                     ]
@@ -162,9 +173,45 @@
                         {
                             "type": "APP-HEALTH-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName like 'Order-Composer' or appName like 'Order-Processing'",
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Order-Composer' or appName = 'Order-Processing'",
                             "min_apdex": 0.6,
                             "max_response_time": 2.25,
+                            "max_error_percentage": 1
+                        }
+                    ]
+                },
+                {
+                    "title": "Billing Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST1-LINE2-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Billing Service'",
+                            "min_apdex": 0.6,
+                            "max_response_time": 1,
+                            "max_error_percentage": 1
+                        }
+                    ]
+                },
+                {
+                    "title": "Inventory Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST1-LINE3-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName like 'Inventory%'",
+                            "min_apdex": 0.6,
+                            "max_response_time": 1,
                             "max_error_percentage": 1
                         }
                     ]
@@ -238,6 +285,42 @@
                             "max_error_percentage": 1
                         }
                     ]
+                },
+                {
+                    "title": "Box Service Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST2-LINE1-SS2",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Box'",
+                            "min_apdex": 0.65,
+                            "max_response_time": 0.3,
+                            "max_error_percentage": 1
+                        }
+                    ]
+                },
+                {
+                    "title": "Wrap Service Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST2-LINE1-SS3",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Bubble-Wrap'",
+                            "min_apdex": 0.65,
+                            "max_response_time": 0.3,
+                            "max_error_percentage": 1
+                        }
+                    ]
                 }
             ]
         },
@@ -272,7 +355,7 @@
             ],
             "touchpoints": [
                 {
-                    "title": "Orders Delivered (throughput)",
+                    "title": "Orders Delivered Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -299,6 +382,24 @@
                             "type": "APP-HEALTH-QUERY",
                             "accountID": 1606862,
                             "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='Delivery' and name = 'Controller/Sinatra//deliver'",
+                            "min_apdex": 0.7,
+                            "max_response_time": 1,
+                            "max_error_percentage": 2
+                        }
+                    ]
+                },
+                {
+                    "title": "Shipping Service Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST3-LINE2-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Shipping Service'",
                             "min_apdex": 0.7,
                             "max_response_time": 1,
                             "max_error_percentage": 2
@@ -410,7 +511,7 @@
                             "accountID": 1606862,
                             "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200",
                             "min_apdex": 0.9,
-                            "max_response_time": 0.6,
+                            "max_response_time": 0.7,
                             "max_error_percentage": 1
                         }
                     ]
