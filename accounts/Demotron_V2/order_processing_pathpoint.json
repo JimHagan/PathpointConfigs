@@ -350,7 +350,7 @@
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST4-LINE1-SS1",
+                    "related_steps": "ST4-LINE1-SS2",
                     "queries": [
                         {
                             "type": "PCC-COUNT-QUERY",
