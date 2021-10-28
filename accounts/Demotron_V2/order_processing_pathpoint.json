@@ -37,7 +37,7 @@
     ],
     "stages": [
         {
-            "title": "ORDER MGMT.",
+            "title": "ORDER",
             "active_dotted": "none",
             "arrowMode": "FLOW",
             "percentage_above_avg": 20,
@@ -46,16 +46,8 @@
                     "line": 1,
                     "values": [
                         {
-                            "title": "Web",
+                            "title": "Order Proc",
                             "id": "ST1-LINE1-SS1"
-                        },
-                        {
-                            "title": "Mobile Web",
-                            "id": "ST1-LINE1-SS2"
-                        },
-                        {
-                            "title": "App",
-                            "id": "ST1-LINE1-SS3"
                         }
                     ]
                 },
@@ -63,16 +55,8 @@
                     "line": 2,
                     "values": [
                         {
-                            "title": "Login",
-                            "id": "ST1-LINE2-SS1"
-                        },
-                        {
-                            "title": "Signup",
-                            "id": "ST1-LINE2-SS2"
-                        },
-                        {
                             "title": "Billing",
-                            "id": "ST1-LINE2-SS3"
+                            "id": "ST1-LINE2-SS1"
                         }
                     ]
                 },
@@ -84,15 +68,6 @@
                             "id": "ST1-LINE3-SS1"
                         }
                     ]
-                },
-                {
-                    "line": 4,
-                    "values": [
-                        {
-                            "title": "K8s",
-                            "id": "ST1-LINE4-SS1"
-                        }
-                    ]
                 }
             ],
             "touchpoints": [
@@ -102,7 +77,7 @@
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST1-LINE2-SS1",
+                    "related_steps": "ST1-LINE1-SS1",
                     "queries": [
                         {
                             "type": "PRC-COUNT-QUERY",
@@ -118,7 +93,7 @@
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST1-LINE1-SS3",
+                    "related_steps": "ST1-LINE1-SS1",
                     "queries": [
                         {
                             "type": "PCC-COUNT-QUERY",
@@ -134,7 +109,7 @@
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST1-LINE1-SS3",
+                    "related_steps": "ST1-LINE1-SS1",
                     "queries": [
                         {
                             "type": "APP-HEALTH-QUERY",
@@ -163,28 +138,11 @@
                             "max_error_percentage": 1
                         }
                     ]
-                },
-                {
-                    "title": "Order Composer Pod Wait",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST1-LINE4-SS1",
-                    "queries": [
-                        {
-                            "type": "PRC-COUNT-QUERY",
-                            "accountID": 1606862,
-                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like 'order-composer-%'",
-                            "max_count": 5
-                        }
-                    ]
                 }
-
             ]
         },
         {
-            "title": "PACKAGING",
+            "title": "PACKAGE",
             "active_dotted": "none",
             "arrowMode": "STATIC",
             "percentage_above_avg": 20,
@@ -214,15 +172,6 @@
                             "id": "ST2-LINE2-SS1"
                         }
                     ]
-                },
-                {
-                    "line": 3,
-                    "values": [
-                        {
-                            "title": "K8s",
-                            "id": "ST2-LINE3-SS1"
-                        }
-                    ]
                 }
             ],
             "touchpoints": [
@@ -243,7 +192,7 @@
                     ]
                 },
                 {
-                    "title": "Inventory Service Health",
+                    "title": "Order Packaging Health",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -253,17 +202,17 @@
                         {
                             "type": "APP-HEALTH-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
-                            "min_apdex": 0.4,
-                            "max_response_time": 0.5,
-                            "max_error_percentage": 5
+                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='Order-Packaging'",
+                            "min_apdex": 0.65,
+                            "max_response_time": 0.2,
+                            "max_error_percentage": 1
                         }
                     ]
                 }
             ]
         },
         {
-            "title": "SHIPPING",
+            "title": "SHIP",
             "active_dotted": "none",
             "arrowMode": "STATIC",
             "percentage_above_avg": 20,
@@ -289,36 +238,11 @@
                             "id": "ST3-LINE2-SS2"
                         }
                     ]
-                },
-                {
-                    "line": 3,
-                    "values": [
-                        {
-                            "title": "K8s",
-                            "id": "ST3-LINE3-SS1"
-                        }
-                    ]
                 }
             ],
             "touchpoints": [
                 {
-                    "title": "Shipping Service Throughput",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST3-LINE1-SS1",
-                    "queries": [
-                        {
-                            "type": "PCC-COUNT-QUERY",
-                            "accountID": 1606862,
-                            "query": "SELECT count(*) from Transaction WHERE appName = 'Inventory Service' and transactionType = 'Web'",
-                            "min_count": 36
-                        }
-                    ]
-                },
-                {
-                    "title": "Shipping Service Health",
+                    "title": "Orders Delivered (throughput)",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -326,35 +250,35 @@
                     "related_steps": "ST3-LINE2-SS2",
                     "queries": [
                         {
-                            "type": "SYN-CHECK-QUERY",
+                            "type": "PCC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT filter(percentage(count(result),WHERE result='SUCCESS'),WHERE 1=1) as success, max(duration) as duration, max(longRunningTasksAvgTime) as request from SyntheticCheck,SyntheticRequest WHERE monitorName='BDB Live person'",
-                            "max_avg_response_time": 0.7,
-                            "max_total_check_time": 1.25,
-                            "min_success_percentage": 98
+                            "query": "SELECT count(*) from Transaction WHERE appName = 'Delivery' and name = 'Controller/Sinatra//deliver' and errorMessage is NULL",
+                            "min_count": 50
                         }
                     ]
                 },
                 {
-                    "title": "Shipping Pod Wait",
+                    "title": "Delivery Service Health",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST3-LINE3-SS1",
+                    "related_steps": "ST3-LINE2-SS2",
                     "queries": [
                         {
-                            "type": "PRC-COUNT-QUERY",
+                            "type": "APP-HEALTH-QUERY",
                             "accountID": 1606862,
-                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  'shipping%'",
-                            "max_count": 5
+                            "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='Delivery' and name = 'Controller/Sinatra//deliver'",
+                            "min_apdex": 0.7,
+                            "max_response_time": 1,
+                            "max_error_percentage": 2
                         }
                     ]
                 }
             ]
         },
         {
-            "title": "NOTIFICATION",
+            "title": "NOTIFY",
             "active_dotted": "none",
             "arrowMode": "FLOW",
             "percentage_above_avg": 20,
@@ -369,26 +293,13 @@
                         {
                             "title": "SMS",
                             "id": "ST4-LINE1-SS2"
-                        },
-                        {
-                            "title": "In App",
-                            "id": "ST4-LINE1-SS3"
-                        }
-                    ]
-                },
-                {
-                    "line": 2,
-                    "values": [
-                        {
-                            "title": "K8s",
-                            "id": "ST4-LINE2-SS1"
                         }
                     ]
                 }
             ],
             "touchpoints": [
                 {
-                    "title": "Notification Services Throughput",
+                    "title": "Email Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -396,63 +307,28 @@
                     "related_steps": "ST4-LINE1-SS1",
                     "queries": [
                         {
-                            "type": "PRC-COUNT-QUERY",
+                            "type": "PCC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT count(*) from Transaction WHERE appName like '%-Notification' and transactionType = 'Web'",
-                            "min_count": 10
+                            "query": "SELECT count(*) from Transaction WHERE appName = 'Email-Notification' and name = 'Controller/Sinatra//send_email' and errorMessage is NULL",
+                            "min_count": 50
                         }
                     ]
                 },
                 {
-                    "title": "Notification Service Health",
+                    "title": "SMS Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST4-LINE1-SS2",
+                    "related_steps": "ST4-LINE1-SS1",
                     "queries": [
                         {
-                            "type": "APP-HEALTH-QUERY",
+                            "type": "PCC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
-                            "min_apdex": 0.4,
-                            "max_response_time": 0.5,
-                            "max_error_percentage": 5
+                            "query": "SELECT count(*) from Transaction WHERE appName = 'Sms-Notification' and name = 'Controller/Sinatra//send_sms' and errorMessage is NULL",
+                            "min_count": 50
                         }
-                    ]
-                },
-                {
-                    "title": "In App Notification Health",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST4-LINE1-SS3",
-                    "queries": [
-                        {
-                            "type": "FRT-HEALTH-QUERY",
-                            "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
-                            "min_apdex": 0.6,
-                            "max_response_time": 1.2,
-                            "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "Notification Pod Wait",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST4-LINE2-SS1",
-                    "queries": [
-                        {
-                            "type": "PRC-COUNT-QUERY",
-                            "accountID": 1606862,
-                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  '%-notification-%'",
-                            "max_count": 5
-                        }
+                        
                     ]
                 }
             ]
