@@ -3,10 +3,10 @@
     "kpis": [
         {
             "type": 101,
-            "name": "Processed",
-            "shortName": "ORDER_PROC",
+            "name": "ORDERS",
+            "shortName": "ORD.",
             "link": "https://onenr.io/0bEjOMel9w6",
-            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Order-Processing' AND httpResponseCode = '200' AND request.method = 'POST' COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -14,10 +14,10 @@
         },
         {
             "type": 101,
-            "name": "Process Errors",
-            "shortName": "ORDER_PROC_ERR",
+            "name": "ORDER ERRORS",
+            "shortName": "ORD. ERR.",
             "link": "https://onenr.io/08dQeeBrVQe",
-            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as value FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' COMPARE WITH 1 week ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -25,10 +25,21 @@
         },
         {
             "type": 101,
-            "name": "Shipped",
-            "shortName": "ORDER_SHIP",
+            "name": "DELIVERED",
+            "shortName": "DELIVERED",
             "link": "https://onenr.io/0x0jlgGN7RW",
-            "query": "SELECT count(*) as value  FROM  Transaction WHERE appName = 'Shipping Service' AND errorMessage is NULL COMPARE WITH 2 day ago",
+            "query": "SELECT count(*) as value FROM Transaction where appName = 'Delivery' where name = 'Controller/Sinatra//deliver' and http.statusCode = 200 COMPARE WITH 1 week ago",
+            "value_type": "FLOAT",
+            "prefix": "",
+            "suffix": "",
+            "check": true
+        },
+        {
+            "type": 101,
+            "name": "RETURNED",
+            "shortName": "RETURNS",
+            "link": "https://onenr.io/0x0jlgGN7RW",
+            "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
             "value_type": "FLOAT",
             "prefix": "",
             "suffix": "",
@@ -36,6 +47,59 @@
         }
     ],
     "stages": [
+        {
+            "title": "Login",
+            "active_dotted": "none",
+            "arrowMode": "FLOW",
+            "percentage_above_avg": 20,
+            "steps": [
+                {
+                    "line": 1,
+                    "values": [
+                        {
+                            "title": "LOGIN",
+                            "id": "ST0-LINE1-SS1"
+                        }
+                    ]
+                }
+            ],
+            "touchpoints": [
+                {
+                    "title": "Login Service Throughput",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST0-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "PRC-COUNT-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT count(*) as session FROM Transaction WHERE appName = 'Login Service' and name = 'WebTransaction/Go/POST /login' AND http.statusCode = 200",
+                            "min_count": 40
+                        }
+                    ]
+                },
+                {
+                    "title": "Login Performance",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST0-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Login Service' and name = 'WebTransaction/Go/POST /login' AND http.statusCode = 200",
+                            "min_apdex": 0.9,
+                            "max_response_time": 0.2,
+                            "max_error_percentage": 1
+                        }
+                    ]
+                }
+            ]
+        },
         {
             "title": "ORDER",
             "active_dotted": "none",
@@ -72,22 +136,6 @@
             ],
             "touchpoints": [
                 {
-                    "title": "Login Service Throughput",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST1-LINE1-SS1",
-                    "queries": [
-                        {
-                            "type": "PRC-COUNT-QUERY",
-                            "accountID": 1606862,
-                            "query": "SELECT count(*) as session FROM Transaction WHERE appName = 'Login Service' and name = 'WebTransaction/Go/POST /login' AND http.statusCode = 200",
-                            "min_count": 40
-                        }
-                    ]
-                },
-                {
                     "title": "Order Processing Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
@@ -117,24 +165,6 @@
                             "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName like 'Order-Composer' or appName like 'Order-Processing'",
                             "min_apdex": 0.6,
                             "max_response_time": 2.25,
-                            "max_error_percentage": 1
-                        }
-                    ]
-                },
-                {
-                    "title": "Login Performance",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST1-LINE2-SS1",
-                    "queries": [
-                        {
-                            "type": "APP-HEALTH-QUERY",
-                            "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Login Service' and name = 'WebTransaction/Go/POST /login' AND http.statusCode = 200",
-                            "min_apdex": 0.9,
-                            "max_response_time": 0.2,
                             "max_error_percentage": 1
                         }
                     ]
@@ -204,7 +234,7 @@
                             "accountID": 1606862,
                             "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='Order-Packaging'",
                             "min_apdex": 0.65,
-                            "max_response_time": 0.2,
+                            "max_response_time": 0.3,
                             "max_error_percentage": 1
                         }
                     ]
@@ -332,6 +362,61 @@
                     ]
                 }
             ]
+        },
+        {
+            "title": "RETURN",
+            "active_dotted": "none",
+            "arrowMode": "FLOW",
+            "percentage_above_avg": 20,
+            "steps": [
+                {
+                    "line": 1,
+                    "values": [
+                        {
+                            "title": "RETURN",
+                            "id": "ST5-LINE1-SS1"
+                        }
+                    ]
+                }
+            ],
+            "touchpoints": [
+                {
+                    "title": "Return Throughput",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST5-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "PCC-COUNT-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT count(*) FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200",
+                            "max_count": 15,
+                            "min_count": 1
+                        }
+                    ]
+                },
+                {
+                    "title": "Return Performance",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST5-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200",
+                            "min_apdex": 0.9,
+                            "max_response_time": 0.6,
+                            "max_error_percentage": 1
+                        }
+                    ]
+                }
+            ]
         }
+
     ]
 }
