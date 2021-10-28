@@ -97,7 +97,7 @@
             ],
             "touchpoints": [
                 {
-                    "title": "Login People",
+                    "title": "Login Service Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -107,13 +107,29 @@
                         {
                             "type": "PRC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='queue'",
-                            "min_count": 10
+                            "query": "SELECT count(*) as session FROM Transaction WHERE appName = 'Login Service' and name = 'WebTransaction/Go/POST /login' AND http.statusCode = 200",
+                            "min_count": 40
                         }
                     ]
                 },
                 {
-                    "title": "App Backend Health",
+                    "title": "Order Processing Throughput",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0EPwJb28Bw7"
+                    ],
+                    "related_steps": "ST1-LINE1-SS3",
+                    "queries": [
+                        {
+                            "type": "PCC-COUNT-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT count(*)  FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//purchase' and http.statusCode = 200",
+                            "min_count": 80
+                        }
+                    ]
+                },
+                {
+                    "title": "Order Composer & Processing Health",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -123,33 +139,15 @@
                         {
                             "type": "APP-HEALTH-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:0.028), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='QS'",
-                            "min_apdex": 0.4,
-                            "max_response_time": 0.5,
-                            "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "App Frontend Health",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST1-LINE1-SS1",
-                    "queries": [
-                        {
-                            "type": "FRT-HEALTH-QUERY",
-                            "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from PageView WHERE appName='QS'",
+                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName like 'Order-Composer' or appName like 'Order-Processing'",
                             "min_apdex": 0.6,
-                            "max_response_time": 1.2,
-                            "max_error_percentage": 5
+                            "max_response_time": 2.25,
+                            "max_error_percentage": 1
                         }
                     ]
                 },
                 {
-                    "title": "Login Check",
+                    "title": "Login Performance",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -157,28 +155,12 @@
                     "related_steps": "ST1-LINE2-SS1",
                     "queries": [
                         {
-                            "type": "SYN-CHECK-QUERY",
+                            "type": "APP-HEALTH-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT filter(percentage(count(result),WHERE result='SUCCESS'),WHERE 1=1) as success, max(duration) as duration, max(longRunningTasksAvgTime) as request from SyntheticCheck,SyntheticRequest WHERE monitorName='BDB Live person'",
-                            "max_avg_response_time": 0.7,
-                            "max_total_check_time": 1.25,
-                            "min_success_percentage": 98
-                        }
-                    ]
-                },
-                {
-                    "title": "Signup People",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST1-LINE2-SS2",
-                    "queries": [
-                        {
-                            "type": "PRC-COUNT-QUERY",
-                            "accountID": 1606862,
-                            "query": "SELECT count(*) as session FROM Public_APICall WHERE awsRegion='us-east-1'",
-                            "min_count": 36
+                            "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE request.method = 'POST') as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Login Service' and name = 'WebTransaction/Go/POST /login' AND http.statusCode = 200",
+                            "min_apdex": 0.9,
+                            "max_response_time": 0.2,
+                            "max_error_percentage": 1
                         }
                     ]
                 },
@@ -228,7 +210,7 @@
                     "line": 2,
                     "values": [
                         {
-                            "title": "Inventory Service",
+                            "title": "Packaging Service",
                             "id": "ST2-LINE2-SS1"
                         }
                     ]
@@ -245,7 +227,7 @@
             ],
             "touchpoints": [
                 {
-                    "title": "Inventory Service Throughput",
+                    "title": "Order Packaging Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
@@ -255,8 +237,8 @@
                         {
                             "type": "PCC-COUNT-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT count(*) FROM Public_APICall WHERE awsRegion='us-east-1'",
-                            "min_count": 20
+                            "query": "SELECT count(*) FROM Transaction where appName = 'Order-Packaging' where name = 'Controller/Sinatra//package_order' and http.statusCode = 200",
+                            "min_count": 75
                         }
                     ]
                 },
@@ -275,22 +257,6 @@
                             "min_apdex": 0.4,
                             "max_response_time": 0.5,
                             "max_error_percentage": 5
-                        }
-                    ]
-                },
-                {
-                    "title": "Inventory Pod Wait",
-                    "status_on_off": true,
-                    "dashboard_url": [
-                        "https://onenr.io/0EPwJb28Bw7"
-                    ],
-                    "related_steps": "ST2-LINE3-SS1",
-                    "queries": [
-                        {
-                            "type": "PRC-COUNT-QUERY",
-                            "accountID": 1606862,
-                            "query": "FROM K8sContainerSample select uniqueCount(podName) where status = 'Waiting' and podName like  'inventory%'",
-                            "max_count": 5
                         }
                     ]
                 }
