@@ -59,7 +59,7 @@
     ],
     "stages": [
         {
-            "title": "Login",
+            "title": "LOGIN",
             "active_dotted": "none",
             "arrowMode": "FLOW",
             "percentage_above_avg": 20,
