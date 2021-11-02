@@ -76,6 +76,21 @@
             ],
             "touchpoints": [
                 {
+                    "title": "Login Infra (WORKLOAD)",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0DvwBYrBEQp"
+                    ],
+                    "related_steps": "",
+                    "queries": [
+                        {
+                            "type": "WORKLOAD-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT latest(statusValue) as statusValue FROM WorkloadStatus WHERE entity.name='SHIPPING INFRA (Pathpoint Demo)'"
+                        }
+                    ]
+                },
+                {
                     "title": "Login Service Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
@@ -146,6 +161,21 @@
                 }
             ],
             "touchpoints": [
+                {
+                    "title": "Order Infra (WORKLOAD)",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0LZQWBe9pjW"
+                    ],
+                    "related_steps": "",
+                    "queries": [
+                        {
+                            "type": "WORKLOAD-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT latest(statusValue) as statusValue FROM WorkloadStatus WHERE entity.name='ORDER INFRA (Pathpoint Demo)'"
+                        }
+                    ]
+                },
                 {
                     "title": "Order Processing Throughput",
                     "status_on_off": true,
@@ -228,16 +258,12 @@
                     "line": 1,
                     "values": [
                         {
-                            "title": "Packing & Assembly",
+                            "title": "Boxing",
                             "id": "ST2-LINE1-SS1"
                         },
                         {
-                            "title": "Boxing",
-                            "id": "ST2-LINE1-SS2"
-                        },
-                        {
                             "title": "Wrapping",
-                            "id": "ST2-LINE1-SS3"
+                            "id": "ST2-LINE1-SS2"
                         }
                     ]
                 },
@@ -252,6 +278,21 @@
                 }
             ],
             "touchpoints": [
+                {
+                    "title": "Packaging Infra (WORKLOAD)",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0e1wZ8o9aj6"
+                    ],
+                    "related_steps": "",
+                    "queries": [
+                        {
+                            "type": "WORKLOAD-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT latest(statusValue) as statusValue FROM WorkloadStatus WHERE entity.name='PACKAGE INFRA (Pathpoint Demo)'"
+                        }
+                    ]
+                },
                 {
                     "title": "Order Packaging Throughput",
                     "status_on_off": true,
@@ -292,7 +333,7 @@
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST2-LINE1-SS2",
+                    "related_steps": "ST2-LINE1-SS1",
                     "queries": [
                         {
                             "type": "APP-HEALTH-QUERY",
@@ -310,7 +351,7 @@
                     "dashboard_url": [
                         "https://onenr.io/0EPwJb28Bw7"
                     ],
-                    "related_steps": "ST2-LINE1-SS3",
+                    "related_steps": "ST2-LINE1-SS2",
                     "queries": [
                         {
                             "type": "APP-HEALTH-QUERY",
@@ -354,6 +395,21 @@
                 }
             ],
             "touchpoints": [
+                {
+                    "title": "Shipping Infra (WORKLOAD)",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0oqQaq496Q1"
+                    ],
+                    "related_steps": "",
+                    "queries": [
+                        {
+                            "type": "WORKLOAD-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT latest(statusValue) as statusValue FROM WorkloadStatus WHERE entity.name='SHIPPING INFRA (Pathpoint Demo)'"
+                        }
+                    ]
+                },
                 {
                     "title": "Orders Delivered Throughput",
                     "status_on_off": true,
@@ -429,6 +485,21 @@
                 }
             ],
             "touchpoints": [
+                {
+                    "title": "Notification Infra (WORKLOAD)",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0DvwBYrgEQp"
+                    ],
+                    "related_steps": "",
+                    "queries": [
+                        {
+                            "type": "WORKLOAD-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT latest(statusValue) as statusValue FROM WorkloadStatus WHERE entity.name='NOTIFICATION INFRA (Pathpoint Demo)'"
+                        }
+                    ]
+                },
                 {
                     "title": "Email Throughput",
                     "status_on_off": true,
