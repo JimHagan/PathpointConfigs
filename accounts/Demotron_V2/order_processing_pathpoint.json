@@ -1,5 +1,5 @@
 {
-    "pathpointVersion": "1.5.9",
+    "pathpointVersion": "1.5.21",
     "kpis": [
         {
             "type": 101,
@@ -7,10 +7,16 @@
             "shortName": "PURCH",
             "link": "https://onenr.io/08dQePr1dje",
             "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
+            "measure": [
+                {
+                    "accountID": 1606862,
+                    "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
+                    "link": "https://onenr.io/08dQePr1dje"
+                }
+            ],
             "value_type": "FLOAT",
             "prefix": "",
-            "suffix": "",
-            "check": true
+            "suffix": ""
         },
         {
             "type": 101,
@@ -18,10 +24,16 @@
             "shortName": "DEL",
             "link": "https://onenr.io/0dBj3o4y2jX",
             "query": "SELECT count(*) as value FROM Transaction where appName = 'Delivery' where name = 'Controller/Sinatra//deliver' and http.statusCode = 200 COMPARE WITH 1 week ago",
+            "measure": [
+                {
+                    "accountID": 1606862,
+                    "query": "SELECT count(*) as value FROM Transaction where appName = 'Delivery' where name = 'Controller/Sinatra//deliver' and http.statusCode = 200 COMPARE WITH 1 week ago",
+                    "link": "https://onenr.io/0dBj3o4y2jX"
+                }
+            ],
             "value_type": "FLOAT",
             "prefix": "",
-            "suffix": "",
-            "check": true
+            "suffix": ""
         },
         {
             "type": 101,
@@ -29,21 +41,33 @@
             "shortName": "RET",
             "link": "https://onenr.io/0z7wkVa1GQL",
             "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
+            "measure": [
+                {
+                    "accountID": 1606862,
+                    "query": "SELECT count(*) as value FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200 COMPARE WITH 1 week ago",
+                    "link": "https://onenr.io/0z7wkVa1GQL"
+                }
+            ],
             "value_type": "FLOAT",
             "prefix": "",
-            "suffix": "",
-            "check": true
-        },        
+            "suffix": ""
+        },
         {
             "type": 101,
             "name": "Total Slow Orders",
             "shortName": "SLOW",
             "link": "https://onenr.io/0JBQrBPpNQZ",
             "query": "select count(*) as value from Transaction where duration > 2 and appName in ('Order-Processing') and name = 'Controller/Sinatra//purchase' COMPARE WITH 1 week ago",
+            "measure": [
+                {
+                    "accountID": 1606862,
+                    "query": "select count(*) as value from Transaction where duration > 2 and appName in ('Order-Processing') and name = 'Controller/Sinatra//purchase' COMPARE WITH 1 week ago",
+                    "link": "https://onenr.io/0JBQrBPpNQZ"
+                }
+            ],
             "value_type": "FLOAT",
             "prefix": "",
-            "suffix": "",
-            "check": true
+            "suffix": ""
         },
         {
             "type": 101,
@@ -51,10 +75,16 @@
             "shortName": "ERR",
             "link": "https://onenr.io/0eqwy9LJOwn",
             "query": "SELECT count(*) as value FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' COMPARE WITH 1 week ago",
+            "measure": [
+                {
+                    "accountID": 1606862,
+                    "query": "SELECT count(*) as value FROM Transaction WHERE appName = 'Order-Processing' and httpResponseCode != '200' COMPARE WITH 1 week ago",
+                    "link": "https://onenr.io/0eqwy9LJOwn"
+                }
+            ],
             "value_type": "FLOAT",
             "prefix": "",
-            "suffix": "",
-            "check": true
+            "suffix": ""
         }
     ],
     "stages": [
@@ -530,7 +560,6 @@
                             "query": "SELECT count(*) from Transaction WHERE appName = 'Sms-Notification' and name = 'Controller/Sinatra//send_sms' and errorMessage is NULL",
                             "min_count": 50
                         }
-                        
                     ]
                 }
             ]
@@ -564,7 +593,6 @@
                             "type": "PCC-COUNT-QUERY",
                             "accountID": 1606862,
                             "query": "SELECT count(*) FROM Transaction where appName = 'Order-Processing' where name = 'Controller/Sinatra//return_purchase' and http.statusCode = 200",
-                            "max_count": 15,
                             "min_count": 1
                         }
                     ]
@@ -589,6 +617,5 @@
                 }
             ]
         }
-
     ]
 }
