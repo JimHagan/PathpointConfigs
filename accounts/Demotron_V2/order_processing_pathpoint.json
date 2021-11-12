@@ -485,7 +485,7 @@
                         {
                             "type": "APP-HEALTH-QUERY",
                             "accountID": 1606862,
-                            "query": "SELECT filter(apdex(duration, t:1), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE request.method = 'POST') as error from Transaction WHERE appName = 'Shipping Service'",
+                            "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='Shipping Service' and transactionType = 'Web'",
                             "min_apdex": 0.7,
                             "max_response_time": 1,
                             "max_error_percentage": 2
