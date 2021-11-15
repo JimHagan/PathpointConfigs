@@ -491,6 +491,24 @@
                             "max_error_percentage": 2
                         }
                     ]
+                },
+                {
+                    "title": "Label Service Health",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0dBj39JM2wX"
+                    ],
+                    "related_steps": "ST3-LINE1-SS1",
+                    "queries": [
+                        {
+                            "type": "APP-HEALTH-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT filter(apdex(duration, t:0.5), WHERE 1=1) as apdex, filter( max(duration), WHERE 1=1) as response,filter(percentage(count(*), WHERE error is true), WHERE 1=1) as error from Transaction WHERE appName='Shipment-Label' and name ='Controller/Sinatra//print_shipping_label'",
+                            "min_apdex": 0.9,
+                            "max_response_time": 0.5,
+                            "max_error_percentage": 1
+                        }
+                    ]
                 }
             ]
         },
