@@ -600,6 +600,21 @@
             ],
             "touchpoints": [
                 {
+                    "title": "Return Infra (WORKLOAD)",
+                    "status_on_off": true,
+                    "dashboard_url": [
+                        "https://onenr.io/0oqQaq496Q1"
+                    ],
+                    "related_steps": "",
+                    "queries": [
+                        {
+                            "type": "WORKLOAD-QUERY",
+                            "accountID": 1606862,
+                            "query": "SELECT latest(statusValue) as statusValue FROM WorkloadStatus WHERE entity.name='SHIPPING INFRA (Pathpoint Demo)'"
+                        }
+                    ]
+                },
+                {
                     "title": "Return Throughput",
                     "status_on_off": true,
                     "dashboard_url": [
